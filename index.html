@@ -140,7 +140,7 @@
     <a href="#" id="whatsapp-link" target="_blank" rel="noopener noreferrer" class="btn btn-wa">Join WhatsApp Group</a>
 
     <!-- Navigation Button -->
-    <button id="continue-btn" class="btn btn-submit" disabled>Unlock Link</button>
+    <button id="continue-btn" class="btn btn-submit" disabled>Join Group to Apply</button>
 
     <!-- Ad Unit 2 -->
     <div class="ad-container" id="ad-bottom">
@@ -175,7 +175,7 @@
       joined = true;
       sessionStorage.setItem("sda_token", "authorized_session");
       continueBtn.removeAttribute("disabled");
-      continueBtn.innerText = "Continue to Redirection";
+      continueBtn.innerText = "Apply Now";
     }
 
     tgLink.addEventListener("click", handleJoinClick);
