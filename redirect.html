@@ -127,11 +127,7 @@
       <p id="status-message">Please wait while we prepare your destination link...</p>
     </div>
 
-    <!-- Ad Unit 1 -->
-    <div class="ad-container" id="ad-top">
-      <div class="ad-label">ADVERTISEMENT</div>
-      <div>Google Ad Placeholder (Header Banner)</div>
-    </div>
+
 
     <!-- Countdown Timer -->
     <div class="timer-display" id="timer">5</div>
@@ -139,11 +135,7 @@
     <!-- Redirect Navigation Button -->
     <button id="redirect-btn" class="btn btn-submit" disabled>Please Wait...</button>
 
-    <!-- Ad Unit 2 -->
-    <div class="ad-container" id="ad-bottom">
-      <div class="ad-label">ADVERTISEMENT</div>
-      <div>Google Ad Placeholder (Footer Banner)</div>
-    </div>
+
 
     <!-- Simple Footer -->
     <div class="footer">
@@ -228,38 +220,7 @@
       window.location.href = destination;
     });
 
-    // Dynamic Google AdSense Loader
-    if (GOOGLE_ADSENSE_ID) {
-      const script = document.createElement("script");
-      script.async = true;
-      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${GOOGLE_ADSENSE_ID}`;
-      script.crossOrigin = "anonymous";
-      document.head.appendChild(script);
 
-      if (AD_SLOT_TOP_ID) {
-        document.getElementById("ad-top").innerHTML = `
-          <ins class="adsbygoogle"
-               style="display:block"
-               data-ad-client="${GOOGLE_ADSENSE_ID}"
-               data-ad-slot="${AD_SLOT_TOP_ID}"
-               data-ad-format="auto"
-               data-full-width-responsive="true"></ins>
-        `;
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      }
-
-      if (AD_SLOT_BOTTOM_ID) {
-        document.getElementById("ad-bottom").innerHTML = `
-          <ins class="adsbygoogle"
-               style="display:block"
-               data-ad-client="${GOOGLE_ADSENSE_ID}"
-               data-ad-slot="${AD_SLOT_BOTTOM_ID}"
-               data-ad-format="auto"
-               data-full-width-responsive="true"></ins>
-        `;
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      }
-    }
   </script>
 </body>
 </html>
