@@ -134,10 +134,10 @@
     </div>
 
     <!-- Telegram Button -->
-    <a href="#" id="telegram-link" target="_blank" class="btn btn-tg">Join Telegram Channel</a>
+    <a href="#" id="telegram-link" target="_blank" rel="noopener noreferrer" class="btn btn-tg">Join Telegram Channel</a>
 
     <!-- WhatsApp Button -->
-    <a href="#" id="whatsapp-link" target="_blank" class="btn btn-wa">Join WhatsApp Group</a>
+    <a href="#" id="whatsapp-link" target="_blank" rel="noopener noreferrer" class="btn btn-wa">Join WhatsApp Group</a>
 
     <!-- Navigation Button -->
     <button id="continue-btn" class="btn btn-submit" disabled>Unlock Link</button>
@@ -173,6 +173,7 @@
 
     function handleJoinClick() {
       joined = true;
+      sessionStorage.setItem("sda_token", "authorized_session");
       continueBtn.removeAttribute("disabled");
       continueBtn.innerText = "Continue to Redirection";
     }

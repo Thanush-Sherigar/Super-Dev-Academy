@@ -151,21 +151,48 @@
 
   <script>
     // --- CONFIGURATION ---
-    const DESTINATION_URL = "https://www.google.com"; // Change to your destination website
+    // The final URL encoded in Base64 (to prevent simple bots/source-view bypass).
+    // "aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbQ==" decodes to "https://www.google.com".
+    // Use an online tool or console.log(btoa("YOUR_URL")) to get the base64 code.
+    const DESTINATION_URL_BASE64 = "aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbQ==";
+    
     const COUNTDOWN_SECONDS = 5;                     // Wait duration in seconds
     const GOOGLE_ADSENSE_ID = "";                     // E.g. "ca-pub-XXXXXXXXXXXXXXXX"
     const AD_SLOT_TOP_ID = "";                        // E.g. "1234567890"
     const AD_SLOT_BOTTOM_ID = "";                     // E.g. "0987654321"
+    
+    const RATE_LIMIT_COOLDOWN_SEC = 15;              // Cooldown period in seconds between redirects
     // ---------------------
 
     const timerElement = document.getElementById("timer");
     const redirectBtn = document.getElementById("redirect-btn");
     const statusMessage = document.getElementById("status-message");
 
+    // 1. Gating Security: Redirect back if user bypasses the page 1 check
+    if (sessionStorage.getItem("sda_token") !== "authorized_session") {
+      window.location.href = "index.html";
+      throw new Error("Unauthorized redirect page access.");
+    }
+
+    // 2. Rate Limiting Security: Check cooldown in localStorage
+    const lastRedirectTime = localStorage.getItem("sda_last_redirect_time");
+    const now = Date.now();
+    
+    if (lastRedirectTime && (now - parseInt(lastRedirectTime)) < (RATE_LIMIT_COOLDOWN_SEC * 1000)) {
+      const remainingSec = Math.ceil(((RATE_LIMIT_COOLDOWN_SEC * 1000) - (now - parseInt(lastRedirectTime))) / 1000);
+      statusMessage.innerText = `Rate limit exceeded. Please wait ${remainingSec}s before attempting again.`;
+      statusMessage.style.color = "#ef4444";
+      timerElement.innerText = "✖";
+      timerElement.style.color = "#ef4444";
+      redirectBtn.setAttribute("disabled", "true");
+      redirectBtn.innerText = "Rate Limited";
+      throw new Error("Rate limit active.");
+    }
+
     let timeLeft = COUNTDOWN_SECONDS;
     timerElement.innerText = timeLeft;
 
-    // Timer Interval
+    // 3. Timer Interval Loop
     const interval = setInterval(() => {
       timeLeft--;
       timerElement.innerText = timeLeft;
@@ -182,9 +209,20 @@
       }
     }, 1000);
 
-    // Redirection Event Listener
+    // 4. Decrypted Redirection Click Handler
     redirectBtn.addEventListener("click", () => {
-      window.location.href = DESTINATION_URL;
+      // Set rate limiting timestamp
+      localStorage.setItem("sda_last_redirect_time", Date.now().toString());
+
+      // Prevent double-clicks / debouncing
+      redirectBtn.setAttribute("disabled", "true");
+      redirectBtn.innerText = "Redirecting securely...";
+
+      // Decode target URL
+      const destination = atob(DESTINATION_URL_BASE64);
+      
+      // Clean target redirect
+      window.location.href = destination;
     });
 
     // Dynamic Google AdSense Loader
