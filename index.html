@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Dev Academy - Unlock Link</title>
+  <style>
+    /* Clean, Simple Slate Theme */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .btn {
+      display: block;
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      transition: background-color 0.2s;
+      cursor: pointer;
+      border: none;
+      box-sizing: border-box;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn-tg {
+      background-color: #0088cc;
+      color: white;
+    }
+    .btn-tg:hover {
+      background-color: #0077b3;
+    }
+
+    .btn-wa {
+      background-color: #25d366;
+      color: white;
+    }
+    .btn-wa:hover {
+      background-color: #20ba5a;
+    }
+
+    .btn-submit {
+      background-color: #6366f1;
+      color: white;
+      margin-top: 16px;
+      margin-bottom: 0;
+    }
+    .btn-submit:hover:not(:disabled) {
+      background-color: #4f46e5;
+    }
+    .btn-submit:disabled {
+      background-color: #334155;
+      color: #64748b;
+      cursor: not-allowed;
+    }
+
+    /* Simple Ad Banner Style */
+    .ad-placeholder {
+      margin-top: 24px;
+      background-color: #1e293b;
+      border: 1px dashed #475569;
+      border-radius: 8px;
+      padding: 15px;
+      font-size: 0.75rem;
+      color: #64748b;
+      text-align: center;
+    }
+    .ad-title {
+      font-weight: bold;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <h1>Super Dev Academy</h1>
+      <p>Please join one of our community channels below to unlock your destination link.</p>
+
+      <!-- Telegram Button -->
+      <a href="#" id="telegram-link" target="_blank" class="btn btn-tg">Join Telegram Channel</a>
+
+      <!-- WhatsApp Button -->
+      <a href="#" id="whatsapp-link" target="_blank" class="btn btn-wa">Join WhatsApp Group</a>
+
+      <!-- Submit / Continue Button -->
+      <button id="continue-btn" class="btn btn-submit" disabled>Continue to Link</button>
+    </div>
+
+    <!-- Ad placeholder -->
+    <div class="ad-placeholder">
+      <div class="ad-title">ADVERTISEMENT</div>
+      <div>Support us by viewing this sponsor message.</div>
+    </div>
+  </div>
+
+  <script>
+    // --- CONFIGURATION ---
+    const TELEGRAM_URL = "https://t.me/your_telegram_channel";
+    const WHATSAPP_URL = "https://chat.whatsapp.com/your_whatsapp_group";
+    // ---------------------
+
+    const tgLink = document.getElementById("telegram-link");
+    const waLink = document.getElementById("whatsapp-link");
+    const continueBtn = document.getElementById("continue-btn");
+
+    // Set URLs from configuration
+    tgLink.href = TELEGRAM_URL;
+    waLink.href = WHATSAPP_URL;
+
+    // Track click state
+    let joined = false;
+
+    function handleJoinClick() {
+      joined = true;
+      continueBtn.removeAttribute("disabled");
+      continueBtn.innerText = "Continue to Destination";
+    }
+
+    tgLink.addEventListener("click", handleJoinClick);
+    waLink.addEventListener("click", handleJoinClick);
+
+    continueBtn.addEventListener("click", () => {
+      // Navigate to the redirection page
+      window.location.href = "redirect.html";
+    });
+  </script>
+</body>
+</html>
