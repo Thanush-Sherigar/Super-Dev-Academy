@@ -5,55 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Super Dev Academy - Generating Link</title>
   <style>
-    /* Clean, Simple Slate Theme */
+    /* Clean, scrollable slate list-like layout */
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: #0f172a;
       color: #f8fafc;
       margin: 0;
-      padding: 0;
+      padding: 40px 20px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       min-height: 100vh;
       box-sizing: border-box;
     }
 
-    .container {
+    .content-wrapper {
       width: 100%;
-      max-width: 450px;
-      padding: 20px;
-      text-align: center;
-      box-sizing: border-box;
+      max-width: 460px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
-    .card {
-      background-color: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      padding: 24px;
-      margin: 20px 0;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    .header-area {
+      text-align: center;
+      margin-bottom: 10px;
     }
 
     h1 {
-      font-size: 1.4rem;
-      margin-top: 0;
-      margin-bottom: 12px;
+      font-size: 1.8rem;
+      margin: 0 0 10px 0;
+      color: #f8fafc;
+      font-weight: 700;
     }
 
     p {
       color: #94a3b8;
-      font-size: 0.9rem;
-      margin-bottom: 20px;
+      font-size: 0.95rem;
+      margin: 0;
+      line-height: 1.5;
     }
 
     .timer-display {
-      font-size: 2.5rem;
+      font-size: 3rem;
       font-weight: 800;
       color: #6366f1;
-      margin: 15px 0;
+      text-align: center;
+      margin: 10px 0;
     }
 
     .btn {
@@ -64,34 +62,39 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 1rem;
-      border: none;
-      cursor: pointer;
       box-sizing: border-box;
-      transition: background-color 0.2s;
+      text-align: center;
+      transition: opacity 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
     }
 
     .btn-submit {
       background-color: #6366f1;
       color: white;
     }
-    .btn-submit:hover:not(:disabled) {
-      background-color: #4f46e5;
-    }
+    
     .btn-submit:disabled {
-      background-color: #334155;
-      color: #64748b;
+      background-color: #1e293b;
+      color: #475569;
+      border: 1px solid #334155;
       cursor: not-allowed;
+      opacity: 1;
     }
 
-    /* Ad Banner Slots */
-    .ad-slot {
+    /* Ad Banner Placement */
+    .ad-container {
       background-color: #1e293b;
-      border: 1px dashed #475569;
+      border: 1px dashed #334155;
       border-radius: 8px;
-      padding: 20px;
-      font-size: 0.75rem;
+      padding: 24px 15px;
+      text-align: center;
+      font-size: 0.8rem;
       color: #64748b;
-      margin: 10px 0;
       box-sizing: border-box;
     }
 
@@ -100,41 +103,56 @@
       color: #94a3b8;
       margin-bottom: 6px;
       letter-spacing: 1px;
+      font-size: 0.7rem;
+    }
+
+    .footer {
+      text-align: center;
+      color: #475569;
+      font-size: 0.8rem;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Top Ad Slot -->
-    <div class="ad-slot" id="ad-top">
+  <div class="content-wrapper">
+    
+    <!-- Title and Subtext -->
+    <div class="header-area">
+      <h1>Super Dev Academy</h1>
+      <p id="status-message">Please wait while we prepare your destination link...</p>
+    </div>
+
+    <!-- Ad Unit 1 -->
+    <div class="ad-container" id="ad-top">
       <div class="ad-label">ADVERTISEMENT</div>
       <div>Google Ad Placeholder (Header Banner)</div>
     </div>
 
-    <!-- Redirection Card -->
-    <div class="card">
-      <h1>Super Dev Academy</h1>
-      <p id="status-message">Please wait, your link will unlock shortly.</p>
-      
-      <!-- Simple Timer Display -->
-      <div class="timer-display" id="timer">5</div>
+    <!-- Countdown Timer -->
+    <div class="timer-display" id="timer">5</div>
 
-      <!-- Action Redirect Button -->
-      <button id="redirect-btn" class="btn btn-submit" disabled>Please Wait...</button>
-    </div>
+    <!-- Redirect Navigation Button -->
+    <button id="redirect-btn" class="btn btn-submit" disabled>Please Wait...</button>
 
-    <!-- Bottom Ad Slot -->
-    <div class="ad-slot" id="ad-bottom">
+    <!-- Ad Unit 2 -->
+    <div class="ad-container" id="ad-bottom">
       <div class="ad-label">ADVERTISEMENT</div>
       <div>Google Ad Placeholder (Footer Banner)</div>
     </div>
+
+    <!-- Simple Footer -->
+    <div class="footer">
+      &copy; 2026 Super Dev Academy.
+    </div>
+
   </div>
 
   <script>
     // --- CONFIGURATION ---
     const DESTINATION_URL = "https://www.google.com"; // Change to your destination website
-    const COUNTDOWN_SECONDS = 5;                     // Time users must wait
+    const COUNTDOWN_SECONDS = 5;                     // Wait duration in seconds
     const GOOGLE_ADSENSE_ID = "";                     // E.g. "ca-pub-XXXXXXXXXXXXXXXX"
     const AD_SLOT_TOP_ID = "";                        // E.g. "1234567890"
     const AD_SLOT_BOTTOM_ID = "";                     // E.g. "0987654321"
@@ -147,7 +165,7 @@
     let timeLeft = COUNTDOWN_SECONDS;
     timerElement.innerText = timeLeft;
 
-    // Countdown Timer Loop
+    // Timer Interval
     const interval = setInterval(() => {
       timeLeft--;
       timerElement.innerText = timeLeft;
@@ -155,17 +173,16 @@
       if (timeLeft <= 0) {
         clearInterval(interval);
         
-        // Timer Finished
         timerElement.innerText = "✓";
         timerElement.style.color = "#25d366";
-        statusMessage.innerText = "Link is ready! Click the button below.";
+        statusMessage.innerText = "Your link is ready! Click the button below.";
         
         redirectBtn.removeAttribute("disabled");
         redirectBtn.innerText = "Go to Website";
       }
     }, 1000);
 
-    // Redirect Click Handler
+    // Redirection Event Listener
     redirectBtn.addEventListener("click", () => {
       window.location.href = DESTINATION_URL;
     });
@@ -178,7 +195,6 @@
       script.crossOrigin = "anonymous";
       document.head.appendChild(script);
 
-      // Replace top ad slot if configured
       if (AD_SLOT_TOP_ID) {
         document.getElementById("ad-top").innerHTML = `
           <ins class="adsbygoogle"
@@ -191,7 +207,6 @@
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       }
 
-      // Replace bottom ad slot if configured
       if (AD_SLOT_BOTTOM_ID) {
         document.getElementById("ad-bottom").innerHTML = `
           <ins class="adsbygoogle"
