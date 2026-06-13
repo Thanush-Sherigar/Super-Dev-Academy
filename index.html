@@ -140,7 +140,7 @@
     <a href="#" id="whatsapp-link" target="_blank" rel="noopener noreferrer" class="btn btn-wa">Join WhatsApp Group</a>
 
     <!-- Navigation Button -->
-    <button id="continue-btn" class="btn btn-submit" disabled>Join Group to Apply</button>
+    <button id="continue-btn" class="btn btn-submit">Apply Now</button>
 
     <!-- Ad Unit 2 -->
     <div class="ad-container" id="ad-bottom">
@@ -182,6 +182,7 @@
     waLink.addEventListener("click", handleJoinClick);
 
     continueBtn.addEventListener("click", () => {
+      sessionStorage.setItem("sda_token", "authorized_session");
       window.location.href = "redirect.html";
     });
   </script>
